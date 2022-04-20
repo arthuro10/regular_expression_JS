@@ -122,6 +122,11 @@
             let replace = document.getElementById('replace').value;
             let output = document.querySelector('.output');
 
+            // re[Symbol.replace](txt, replace) 
+            document.querySelector('.content').textContent = txt.replace(re, replace);
+            output.textContent = 'Replace finished.';
+
+
         }
     </script>
 </body>

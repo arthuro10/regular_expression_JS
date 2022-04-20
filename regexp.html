@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Using Regular Expressions</title>
+    <style>
+        html {
+            font-size: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+        }
+
+        form {
+            font-size: 1rem;
+            color: #999;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        form,
+        main {
+            padding: 1rem 2rem;
+        }
+
+        input {
+            border: none;
+            border-bottom: 1px solid cornflowerblue;
+            font-size: inherit;
+            color: #333;
+            padding: 0 0.5rem;
+            outline: none;
+        }
+
+        button {
+            font-size: inherit;
+            color: #333;
+        }
+
+        .content {
+            font-weight: 300;
+        }
+
+        .output {
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+    <form>
+        <fieldset>
+            <p class="formbox">
+                <label for="find">Pattern</label>
+                /<input type="text" id="find" />/g
+            </p>
+            <p class="formbox">
+                <label for="replace">Replacement Text</label>
+                <input type="text" id="replace" />
+            </p>
+            <p class="formbox">
+                <button id="btnSearch">Do Search</button>
+                <button id="btnReplace">Do Replace</button>
+            </p>
+        </fieldset>
+    </form>
+    <main>
+        <p class="content">Bilbo was very rich and very peculiar, and had been the wonder of the Shire for sixty years,
+            ever since his remarkable disappearance and unexpected return. The riches he had brought back from his
+            travels had now become a local legend, and it was popularly believed, whatever the old folk might say, that
+            the Hill at Bag End was full of tunnels stuffed with treasure. And if that was not enough for fame, there
+            was also his prolonged vigour to marvel at. Time wore on, but it seemed to have little effect on Mr.
+            Baggins. At ninety he was much the same as at fifty. At ninety-nine they began to call him well-preserved;
+            but unchanged would have been nearer the mark. There were some that shook their heads and thought this was
+            too much of a good thing; it seemed unfair that anyone should possess (apparently) perpetual youth as well
+            as (reputedly) inexhaustible wealth.</p>
+        <p class="output"></p>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('btnSearch').addEventListener('click', doSearch);
+            document.getElementById('btnReplace').addEventListener('click', doReplace);
+        });
+        /**
+         * re.test(txt) Boolean
+         * re[Symbol.match](txt) null or Array
+         * re[Symbol.replace](txt) new String
+         *
+         * str.match(re) null or Array
+         * str.replace(re) new String
+         * str.search(re) -1 or first match
+         */
+        function doSearch(ev) {
+            ev.preventDefault();
+            //let reg = /hi(m|s)/g;
+            let re = new RegExp(document.getElementById('find').value, 'g');
+            let txt = document.querySelector('.content').textContent;
+            let replace = document.getElementById('replace').value;
+            let output = document.querySelector('.output');
+            /*if( re.test(txt) ){
+                output.textContent = 'Found a match'
+            }else{
+                output.textContent = 'NOT FOUND';
+            }*/
+            /* You can either use the string version or the version with the symbol Syntax */
+                //let match = re[Symbol.match](txt);
+            let match = txt.match(re);
+
+            if(match) {
+                output.textContent = match.length + ' ' + JSON.stringify(match);
+            }else{
+                output.textContent = 'NOT FOUND';
+            }
+
+        }
+
+        function doReplace(ev) {
+            ev.preventDefault();
+            let re = new RegExp(document.getElementById('find').value, 'g');
+            let txt = document.querySelector('.content').textContent;
+            let replace = document.getElementById('replace').value;
+            let output = document.querySelector('.output');
+
+        }
+    </script>
+</body>
+
+</html>
